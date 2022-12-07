@@ -224,8 +224,14 @@ view: wnba_player_stats_by_game {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
 
-  measure: annual_salary {
+  measure: Avg_annual_salary {
     type: average
+    value_format_name: usd
+    sql: ${TABLE}.AnnualSalary2022 ;;
+  }
+
+  measure: Total_annual_salary {
+    type: sum
     value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
