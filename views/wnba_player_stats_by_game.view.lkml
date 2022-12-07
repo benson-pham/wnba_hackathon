@@ -34,6 +34,11 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.College ;;
   }
 
+  dimension: country {
+    type: string
+    sql: SPLIT(${college},"/")[offset(1)];;
+  }
+
   dimension: date_of_birth {
     type: string
     sql: ${TABLE}.DateOfBirth ;;
