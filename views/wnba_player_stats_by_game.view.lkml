@@ -30,13 +30,14 @@ view: wnba_player_stats_by_game {
   }
 
   dimension: college_country {
+    hidden: yes
     type: string
     sql: ${TABLE}.College ;;
   }
 
   dimension: college {
     type: string
-    sql: SPLIT(${college_country},"/")[offset(1)];;
+    sql: SPLIT(${college_country},"/")[offset(0)];;
   }
 
   dimension: country {
