@@ -45,36 +45,6 @@ view: wnba_player_stats_by_game {
     sql: DATE_DIFF(current_DATE(), DATE (${date_of_birth}), year) ;;
   }
 
-  measure: fantasy_points {
-    type: sum
-    sql: ${TABLE}.FantasyPoints ;;
-  }
-
-  dimension: fantasy_points_per_minute {
-    type: number
-    sql: ${TABLE}.FantasyPointsPerMinute ;;
-  }
-
-  dimension: fouls {
-    type: number
-    sql: ${TABLE}.Fouls ;;
-  }
-
-  dimension: fouls_drawn {
-    type: number
-    sql: ${TABLE}.FoulsDrawn ;;
-  }
-
-  dimension: fouls_drawn_per_minute {
-    type: number
-    sql: ${TABLE}.FoulsDrawnPerMinute ;;
-  }
-
-  dimension: fouls_per_minute {
-    type: number
-    sql: ${TABLE}.FoulsPerMinute ;;
-  }
-
   dimension: game_date_age {
     type: number
     sql: ${TABLE}.GameDateAge ;;
@@ -114,41 +84,6 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.PlayerId ;;
   }
 
-  dimension: points {
-    type: number
-    sql: ${TABLE}.Points ;;
-  }
-
-  dimension: points_per_minute {
-    type: number
-    sql: ${TABLE}.PointsPerMinute ;;
-  }
-
-  dimension: position {
-    type: string
-    sql: ${TABLE}.Position ;;
-  }
-
-  dimension: pts_putbacks {
-    type: number
-    sql: ${TABLE}.PtsPutbacks ;;
-  }
-
-  dimension: pts_putbacks_per_minute {
-    type: number
-    sql: ${TABLE}.PtsPutbacksPerMinute ;;
-  }
-
-  dimension: rebounds {
-    type: number
-    sql: ${TABLE}.Rebounds ;;
-  }
-
-  dimension: rebounds_per_minute {
-    type: number
-    sql: ${TABLE}.ReboundsPerMinute ;;
-  }
-
   dimension: season {
     type: number
     sql: ${TABLE}.Season ;;
@@ -158,16 +93,6 @@ view: wnba_player_stats_by_game {
   dimension: season_type {
     type: string
     sql: ${TABLE}.Season_Type ;;
-  }
-
-  measure: steals {
-    type: sum
-    sql: ${TABLE}.Steals ;;
-  }
-
-  measure: steals_per_minute {
-    type: number
-    sql: ${steals}/nullif(${minutes},0);;
   }
 
   dimension: team_abbreviation {
@@ -255,6 +180,81 @@ view: wnba_player_stats_by_game {
   measure: blocks_per_minute {
     type: number
     sql: ${blocks} / nullif(${minutes}, 0) ;;
+  }
+
+  measure: fantasy_points {
+    type: sum
+    sql: ${TABLE}.FantasyPoints ;;
+  }
+
+  measure: fantasy_points_per_minute {
+    type: number
+    sql: ${fantasy_points}/nullif(${fantasy_points},0) ;;
+  }
+
+  measure: fouls {
+    type: sum
+    sql: ${TABLE}.Fouls ;;
+  }
+
+  measure: fouls_drawn {
+    type: sum
+    sql: ${TABLE}.FoulsDrawn ;;
+  }
+
+  measure: fouls_drawn_per_minute {
+    type: number
+    sql: ${fouls_drawn}/nullif(${minutes},0);;
+  }
+
+  measure: fouls_per_minute {
+    type: number
+    sql: ${fouls}/nullif(${minutes},0);;
+  }
+
+  measure: points {
+    type: sum
+    sql: ${TABLE}.Points ;;
+  }
+
+  measure: points_per_minute {
+    type: number
+    sql: ${points}/nullif(${minutes},0) ;;
+  }
+
+  dimension: position {
+    type: string
+    sql: ${TABLE}.Position ;;
+  }
+
+  measure: pts_putbacks {
+    type: sum
+    sql: ${TABLE}.PtsPutbacks ;;
+  }
+
+  measure: pts_putbacks_per_minute {
+    type: number
+    sql: ${pts_putbacks}/nullif(${minutes},0) ;;
+  }
+
+  measure: rebounds {
+    type: sum
+    sql: ${TABLE}.Rebounds ;;
+  }
+
+  measure: rebounds_per_minute {
+    type: number
+    sql: ${rebounds}/nullif(${minutes},0) ;;
+  }
+
+  measure: steals {
+    type: sum
+    sql: ${TABLE}.Steals ;;
+  }
+
+  measure: steals_per_minute {
+    type: number
+    sql: ${steals}/nullif(${minutes},0);;
   }
 
   measure: turnovers {
