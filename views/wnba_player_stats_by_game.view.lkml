@@ -37,6 +37,7 @@ view: wnba_player_stats_by_game {
 
   measure: assists_per_minute {
     type: number
+    value_format: "0.000"
     sql: ${assists} / nullif(${minutes}, 0) ;;
   }
 
@@ -135,6 +136,7 @@ view: wnba_player_stats_by_game {
 
   measure: minutes {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.Minutes ;;
   }
 
