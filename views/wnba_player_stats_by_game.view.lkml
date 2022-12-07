@@ -27,7 +27,7 @@ view: wnba_player_stats_by_game {
   measure: annual_salary {
     type: average
     value_format_name: usd
-    sql: ${annual_salary_dimension} ;;
+    sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
   measure: assists {
