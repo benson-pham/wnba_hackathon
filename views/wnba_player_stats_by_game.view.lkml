@@ -336,7 +336,7 @@ view: wnba_player_stats_by_game {
 
   measure: team_wins {
     type: sum_distinct
-    sql_distinct_key: ${TABLE}.GameIdTeamId ;;
+    sql_distinct_key: ${TABLE}.TeamAbbreviation ;;
     sql: ${team_win} ;;
   }
 }
