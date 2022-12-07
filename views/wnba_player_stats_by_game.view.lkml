@@ -49,8 +49,8 @@ view: wnba_player_stats_by_game {
     sql: DATE_DIFF(current_DATE(), DATE (${date_of_birth}), year) ;;
   }
 
-  dimension: fantasy_points {
-    type: number
+  measure: fantasy_points {
+    type: sum
     sql: ${TABLE}.FantasyPoints ;;
   }
 
