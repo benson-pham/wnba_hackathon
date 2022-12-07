@@ -30,14 +30,14 @@ view: wnba_player_stats_by_game {
     sql: ${annual_salary_dimension} ;;
   }
 
-  dimension: assists {
-    type: number
+  measure: assists {
+    type: sum
     sql: ${TABLE}.Assists ;;
   }
 
-  dimension: assists_per_minute {
+  measure: assists_per_minute {
     type: number
-    sql: ${TABLE}.AssistsPerMinute ;;
+    sql: ${assists} / nullif(${minutes}, 0) ;;
   }
 
   dimension: blocks {
@@ -133,8 +133,8 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.HomeTeamFlag ;;
   }
 
-  dimension: minutes {
-    type: number
+  measure: minutes {
+    type: sum
     sql: ${TABLE}.Minutes ;;
   }
 
