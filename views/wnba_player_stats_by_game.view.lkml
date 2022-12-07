@@ -160,6 +160,13 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+  measure: Avg_annual_salary_distinct {
+    type: average_distinct
+    sql_distinct_key: ${player_id} ;;
+    value_format_name: usd
+    sql: ${TABLE}.AnnualSalary2022 ;;
+  }
+
   measure: Total_annual_salary {
     type: sum
     value_format_name: usd
