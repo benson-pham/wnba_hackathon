@@ -19,24 +19,20 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
-  dimension: blocks {
-    type: number
-    sql: ${TABLE}.Blocks ;;
-  }
-
-  dimension: blocks_per_minute {
-    type: number
-    sql: ${TABLE}.BlocksPerMinute ;;
-  }
-
-  dimension: college {
+  dimension: college_country {
+    hidden: yes
     type: string
     sql: ${TABLE}.College ;;
   }
 
+  dimension: college {
+    type: string
+    sql: SPLIT(${college_country},"/")[offset(0)];;
+  }
+
   dimension: country {
     type: string
-    sql: SPLIT(${college},"/")[offset(1)];;
+    sql: SPLIT(${college_country},"/")[offset(1)];;
   }
 
   dimension: date_of_birth {
@@ -47,36 +43,6 @@ view: wnba_player_stats_by_game {
   dimension: age {
     type: number
     sql: DATE_DIFF(current_DATE(), DATE (${date_of_birth}), year) ;;
-  }
-
-  measure: fantasy_points {
-    type: sum
-    sql: ${TABLE}.FantasyPoints ;;
-  }
-
-  dimension: fantasy_points_per_minute {
-    type: number
-    sql: ${TABLE}.FantasyPointsPerMinute ;;
-  }
-
-  dimension: fouls {
-    type: number
-    sql: ${TABLE}.Fouls ;;
-  }
-
-  dimension: fouls_drawn {
-    type: number
-    sql: ${TABLE}.FoulsDrawn ;;
-  }
-
-  dimension: fouls_drawn_per_minute {
-    type: number
-    sql: ${TABLE}.FoulsDrawnPerMinute ;;
-  }
-
-  dimension: fouls_per_minute {
-    type: number
-    sql: ${TABLE}.FoulsPerMinute ;;
   }
 
   dimension: game_date_age {
@@ -118,59 +84,20 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.PlayerId ;;
   }
 
-  dimension: points {
-    type: number
-    sql: ${TABLE}.Points ;;
-  }
-
-  dimension: points_per_minute {
-    type: number
-    sql: ${TABLE}.PointsPerMinute ;;
-  }
-
   dimension: position {
     type: string
     sql: ${TABLE}.Position ;;
   }
 
-  dimension: pts_putbacks {
-    type: number
-    sql: ${TABLE}.PtsPutbacks ;;
-  }
-
-  dimension: pts_putbacks_per_minute {
-    type: number
-    sql: ${TABLE}.PtsPutbacksPerMinute ;;
-  }
-
-  dimension: rebounds {
-    type: number
-    sql: ${TABLE}.Rebounds ;;
-  }
-
-  dimension: rebounds_per_minute {
-    type: number
-    sql: ${TABLE}.ReboundsPerMinute ;;
-  }
-
   dimension: season {
     type: number
     sql: ${TABLE}.Season ;;
+    value_format: "0"
   }
 
   dimension: season_type {
     type: string
     sql: ${TABLE}.Season_Type ;;
-  }
-
-  dimension: steals {
-    type: number
-    sql: ${TABLE}.Steals ;;
-  }
-
-  dimension: steals_per_minute {
-    type: number
-    sql: ${TABLE}.StealsPerMinute ;;
   }
 
   dimension: team_abbreviation {
@@ -186,16 +113,6 @@ view: wnba_player_stats_by_game {
   dimension: team_win {
     type: number
     sql: ${TABLE}.TeamWin ;;
-  }
-
-  dimension: turnovers {
-    type: number
-    sql: ${TABLE}.Turnovers ;;
-  }
-
-  dimension: turnovers_per_minute {
-    type: number
-    sql: ${TABLE}.TurnoversPerMinute ;;
   }
 
   dimension: usage {
@@ -237,31 +154,163 @@ view: wnba_player_stats_by_game {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
 
-  measure: annual_salary {
+  measure: Avg_annual_salary {
     type: average
     value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+  measure: Total_annual_salary {
+    type: sum
+    value_format_name: usd
+    sql: ${TABLE}.AnnualSalary2022 ;;
+  }
+
+
   measure: assists {
     type: sum
+    group_label: "Assists"
+    group_item_label: "Total Assists"
     sql: ${TABLE}.Assists ;;
   }
 
   measure: assists_per_minute {
     type: number
+    group_label: "Assists"
     value_format: "0.000"
     sql: ${assists} / nullif(${minutes}, 0) ;;
   }
 
+  measure: blocks {
+    type: sum
+    group_label: "Blocks"
+    group_item_label: "Total Blocks"
+    sql: ${TABLE}.Blocks ;;
+  }
+
+  measure: blocks_per_minute {
+    type: number
+    group_label: "Blocks"
+    value_format: "0.000"
+    sql: ${blocks} / nullif(${minutes}, 0) ;;
+  }
+
+  measure: fantasy_points {
+    type: sum
+    group_label: "Fantasy"
+    sql: ${TABLE}.FantasyPoints ;;
+  }
+
+  measure: fantasy_points_per_minute {
+    type: number
+    group_label: "Fantasy"
+    value_format: "0.000"
+    sql: ${fantasy_points}/nullif(${fantasy_points},0) ;;
+  }
+
+  measure: fouls {
+    type: sum
+    group_label: "Fouls"
+    group_item_label: "Total Fouls"
+    sql: ${TABLE}.Fouls ;;
+  }
+
+  measure: fouls_drawn {
+    type: sum
+    group_label: "Fouls"
+    group_item_label: "Total Fouls Drawn"
+    sql: ${TABLE}.FoulsDrawn ;;
+  }
+
+  measure: fouls_drawn_per_minute {
+    type: number
+    group_label: "Fouls"
+    value_format: "0.000"
+    sql: ${fouls_drawn}/nullif(${minutes},0);;
+  }
+
+  measure: fouls_per_minute {
+    type: number
+    group_label: "Fouls"
+    value_format: "0.000"
+    sql: ${fouls}/nullif(${minutes},0);;
+  }
+
+  measure: points {
+    type: sum
+    group_label: "Points"
+    group_item_label: "Total Points"
+    sql: ${TABLE}.Points ;;
+  }
+
+  measure: points_per_minute {
+    type: number
+    group_label: "Points"
+    value_format: "0.000"
+    sql: ${points}/nullif(${minutes},0) ;;
+  }
+
+  measure: pts_putbacks {
+    type: sum
+    group_label: "Points"
+    group_item_label: "Total Points Putback"
+    sql: ${TABLE}.PtsPutbacks ;;
+  }
+
+  measure: pts_putbacks_per_minute {
+    type: number
+    group_label: "Points"
+    value_format: "0.000"
+    sql: ${pts_putbacks}/nullif(${minutes},0) ;;
+  }
+
+  measure: rebounds {
+    type: sum
+    group_label: "Rebounds"
+    group_item_label: "Total Rebounds"
+    sql: ${TABLE}.Rebounds ;;
+  }
+
+  measure: rebounds_per_minute {
+    type: number
+    group_label: "Rebounds"
+    value_format: "0.000"
+    sql: ${rebounds}/nullif(${minutes},0) ;;
+  }
+
+  measure: steals {
+    type: sum
+    group_label: "Steals"
+    group_item_label: "Total Steals"
+    sql: ${TABLE}.Steals ;;
+  }
+
+  measure: steals_per_minute {
+    type: number
+    group_label: "Steals"
+    value_format: "0.000"
+    sql: ${steals}/nullif(${minutes},0);;
+  }
+
+  measure: turnovers {
+    type: sum
+    group_label: "Turnovers"
+    group_item_label: "Total Turnovers"
+    sql: ${TABLE}.Turnovers ;;
+  }
+
+  measure: turnovers_per_minute {
+    type: number
+    group_label: "Turnovers"
+    value_format: "0.000"
+    sql: ${turnovers}/nullif(${minutes},0);;
+  }
 
   measure: minutes {
     type: sum
     value_format: "0.00"
     sql: ${TABLE}.Minutes ;;
   }
-
-
 
   measure: count {
     type: count
@@ -271,5 +320,10 @@ view: wnba_player_stats_by_game {
   measure: player_count {
     type: count_distinct
     sql: ${player_id} ;;
+  }
+
+  measure: total_wins{
+    type: sum
+    sql: ${team_win} ;;
   }
 }
