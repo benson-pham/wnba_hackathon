@@ -19,16 +19,6 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
-  dimension: blocks {
-    type: number
-    sql: ${TABLE}.Blocks ;;
-  }
-
-  dimension: blocks_per_minute {
-    type: number
-    sql: ${TABLE}.BlocksPerMinute ;;
-  }
-
   dimension: college_country {
     hidden: yes
     type: string
@@ -194,16 +184,6 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.TeamWin ;;
   }
 
-  dimension: turnovers {
-    type: number
-    sql: ${TABLE}.Turnovers ;;
-  }
-
-  dimension: turnovers_per_minute {
-    type: number
-    sql: ${TABLE}.TurnoversPerMinute ;;
-  }
-
   dimension: usage {
     type: number
     sql: ${TABLE}.Usage ;;
@@ -260,14 +240,31 @@ view: wnba_player_stats_by_game {
     sql: ${assists} / nullif(${minutes}, 0) ;;
   }
 
+  measure: blocks {
+    type: sum
+    sql: ${TABLE}.Blocks ;;
+  }
+
+  measure: blocks_per_minute {
+    type: number
+    sql: ${blocks} / nullif(${minutes}, 0) ;;
+  }
+
+  measure: turnovers {
+    type: sum
+    sql: ${TABLE}.Turnovers ;;
+  }
+
+  measure: turnovers_per_minute {
+    type: number
+    sql: ${turnovers}/nullif(${minutes},0);;
+  }
 
   measure: minutes {
     type: sum
     value_format: "0.00"
     sql: ${TABLE}.Minutes ;;
   }
-
-
 
   measure: count {
     type: count
