@@ -339,4 +339,11 @@ view: wnba_player_stats_by_game {
     sql_distinct_key: ${TABLE}.GameIdTeamId ;;
     sql: ${team_win} ;;
   }
+
+  measure: team_possessions {
+    type: sum_distinct
+    sql_distinct_key: ${TABLE}.GameIdTeamId ;;
+    sql: ${TABLE}.TeamPossessions ;;
+  }
+
 }
