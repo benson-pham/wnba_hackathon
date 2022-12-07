@@ -61,6 +61,11 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.DateOfBirth ;;
   }
 
+  dimension: age {
+    type: number
+    sql: DATEDIFF(day, ${date_of_birth}, GETDATE()) ;;
+  }
+
   dimension: fantasy_points {
     type: number
     sql: ${TABLE}.FantasyPoints ;;
