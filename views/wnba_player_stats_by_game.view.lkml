@@ -173,6 +173,7 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+
   measure: assists {
     type: sum
     group_label: "Assists"
