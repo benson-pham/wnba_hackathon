@@ -34,6 +34,11 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.College ;;
   }
 
+  dimension: country {
+    type: string
+    sql: SPLIT(${college},"/")[offset(1)];;
+  }
+
   dimension: date_of_birth {
     type: string
     sql: ${TABLE}.DateOfBirth ;;
@@ -44,8 +49,8 @@ view: wnba_player_stats_by_game {
     sql: DATE_DIFF(current_DATE(), DATE (${date_of_birth}), year) ;;
   }
 
-  dimension: fantasy_points {
-    type: number
+  measure: fantasy_points {
+    type: sum
     sql: ${TABLE}.FantasyPoints ;;
   }
 
