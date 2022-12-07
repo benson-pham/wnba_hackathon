@@ -160,14 +160,14 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.Season_Type ;;
   }
 
-  dimension: steals {
-    type: number
+  measure: steals {
+    type: sum
     sql: ${TABLE}.Steals ;;
   }
 
-  dimension: steals_per_minute {
+  measure: steals_per_minute {
     type: number
-    sql: ${TABLE}.StealsPerMinute ;;
+    sql: ${steals}/nullif(${minutes},0);;
   }
 
   dimension: team_abbreviation {
