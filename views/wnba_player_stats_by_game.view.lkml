@@ -29,14 +29,19 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.BlocksPerMinute ;;
   }
 
-  dimension: college {
+  dimension: college_country {
     type: string
     sql: ${TABLE}.College ;;
   }
 
+  dimension: college {
+    type: string
+    sql: SPLIT(${college_country},"/")[offset(1)];;
+  }
+
   dimension: country {
     type: string
-    sql: SPLIT(${college},"/")[offset(1)];;
+    sql: SPLIT(${college_country},"/")[offset(1)];;
   }
 
   dimension: date_of_birth {
