@@ -13,8 +13,9 @@ view: wnba_player_stats_by_game {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Annual Salary2022" in Explore.
 
-  dimension: annual_salary2022 {
+  dimension: annual_salary_dimension {
     type: number
+    value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
@@ -22,14 +23,11 @@ view: wnba_player_stats_by_game {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_annual_salary2022 {
-    type: sum
-    sql: ${annual_salary2022} ;;
-  }
 
-  measure: average_annual_salary2022 {
+  measure: annual_salary {
     type: average
-    sql: ${annual_salary2022} ;;
+    value_format_name: usd
+    sql: ${annual_salary_dimension} ;;
   }
 
   dimension: assists {
