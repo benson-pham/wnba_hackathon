@@ -45,8 +45,8 @@ view: wnba_player_stats_by_game {
     sql: DATE_DIFF(current_DATE(), DATE (${date_of_birth}), year) ;;
   }
 
-  dimension: fantasy_points {
-    type: number
+  measure: fantasy_points {
+    type: sum
     sql: ${TABLE}.FantasyPoints ;;
   }
 
@@ -152,6 +152,7 @@ view: wnba_player_stats_by_game {
   dimension: season {
     type: number
     sql: ${TABLE}.Season ;;
+    value_format: "0"
   }
 
   dimension: season_type {
@@ -274,5 +275,10 @@ view: wnba_player_stats_by_game {
   measure: player_count {
     type: count_distinct
     sql: ${player_id} ;;
+  }
+
+  measure: total_wins{
+    type: sum
+    sql: ${team_win} ;;
   }
 }
