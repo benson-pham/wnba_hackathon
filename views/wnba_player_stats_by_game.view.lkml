@@ -151,6 +151,7 @@ view: wnba_player_stats_by_game {
   dimension: season {
     type: number
     sql: ${TABLE}.Season ;;
+    value_format: "0"
   }
 
   dimension: season_type {
@@ -249,14 +250,11 @@ view: wnba_player_stats_by_game {
     sql: ${assists} / nullif(${minutes}, 0) ;;
   }
 
-
   measure: minutes {
     type: sum
     value_format: "0.00"
     sql: ${TABLE}.Minutes ;;
   }
-
-
 
   measure: count {
     type: count
@@ -266,5 +264,10 @@ view: wnba_player_stats_by_game {
   measure: player_count {
     type: count_distinct
     sql: ${player_id} ;;
+  }
+
+  measure: total_wins{
+    type: sum
+    sql: ${team_win} ;;
   }
 }
