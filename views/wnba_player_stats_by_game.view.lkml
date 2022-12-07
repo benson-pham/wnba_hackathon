@@ -225,6 +225,11 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.TeamWin ;;
   }
 
+  measure: total_wins {
+    type: sum
+    sql: ${team_win} ;;
+  }
+
   dimension: turnovers {
     type: number
     sql: ${TABLE}.Turnovers ;;
