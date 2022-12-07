@@ -19,24 +19,20 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
-  dimension: blocks {
-    type: number
-    sql: ${TABLE}.Blocks ;;
-  }
-
-  dimension: blocks_per_minute {
-    type: number
-    sql: ${TABLE}.BlocksPerMinute ;;
-  }
-
-  dimension: college {
+  dimension: college_country {
+    hidden: yes
     type: string
     sql: ${TABLE}.College ;;
   }
 
+  dimension: college {
+    type: string
+    sql: SPLIT(${college_country},"/")[offset(0)];;
+  }
+
   dimension: country {
     type: string
-    sql: SPLIT(${college},"/")[offset(1)];;
+    sql: SPLIT(${college_country},"/")[offset(1)];;
   }
 
   dimension: date_of_birth {
@@ -156,6 +152,7 @@ view: wnba_player_stats_by_game {
   dimension: season {
     type: number
     sql: ${TABLE}.Season ;;
+    value_format: "0"
   }
 
   dimension: season_type {
@@ -186,16 +183,6 @@ view: wnba_player_stats_by_game {
   dimension: team_win {
     type: number
     sql: ${TABLE}.TeamWin ;;
-  }
-
-  dimension: turnovers {
-    type: number
-    sql: ${TABLE}.Turnovers ;;
-  }
-
-  dimension: turnovers_per_minute {
-    type: number
-    sql: ${TABLE}.TurnoversPerMinute ;;
   }
 
   dimension: usage {
@@ -260,14 +247,31 @@ view: wnba_player_stats_by_game {
     sql: ${assists} / nullif(${minutes}, 0) ;;
   }
 
+  measure: blocks {
+    type: sum
+    sql: ${TABLE}.Blocks ;;
+  }
+
+  measure: blocks_per_minute {
+    type: number
+    sql: ${blocks} / nullif(${minutes}, 0) ;;
+  }
+
+  measure: turnovers {
+    type: sum
+    sql: ${TABLE}.Turnovers ;;
+  }
+
+  measure: turnovers_per_minute {
+    type: number
+    sql: ${turnovers}/nullif(${minutes},0);;
+  }
 
   measure: minutes {
     type: sum
     value_format: "0.00"
     sql: ${TABLE}.Minutes ;;
   }
-
-
 
   measure: count {
     type: count
@@ -277,5 +281,10 @@ view: wnba_player_stats_by_game {
   measure: player_count {
     type: count_distinct
     sql: ${player_id} ;;
+  }
+
+  measure: total_wins{
+    type: sum
+    sql: ${team_win} ;;
   }
 }
