@@ -4,7 +4,7 @@ explore: wnba_player_stats_by_game {}
 view: wnba_player_stats_by_game {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: `aarons-awesome-project.mis776.wnba_player_stats_by_game`
+  sql_table_name: `aarons-awesome-project.wnba_hackathon.wnba_player_stats_by_game`
     ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
