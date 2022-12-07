@@ -259,4 +259,9 @@ view: wnba_player_stats_by_game {
     type: count
     drill_fields: [name]
   }
+
+  measure: player_count {
+    type: count_distinct
+    sql: ${player_id} ;;
+  }
 }
