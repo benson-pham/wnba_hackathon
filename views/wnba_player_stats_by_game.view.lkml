@@ -63,7 +63,7 @@ view: wnba_player_stats_by_game {
 
   dimension: age {
     type: number
-    sql: DATE_DIFF(DATE ${date_of_birth}, GETDATE(), year) ;;
+    sql: DATE_DIFF(DATE (${date_of_birth}), GETDATE(), year) ;;
   }
 
   dimension: fantasy_points {
