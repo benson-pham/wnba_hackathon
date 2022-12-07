@@ -19,28 +19,6 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-
-  measure: annual_salary {
-    type: average
-    value_format_name: usd
-    sql: ${TABLE}.AnnualSalary2022 ;;
-  }
-
-  measure: assists {
-    type: sum
-    sql: ${TABLE}.Assists ;;
-  }
-
-  measure: assists_per_minute {
-    type: number
-    value_format: "0.000"
-    sql: ${assists} / nullif(${minutes}, 0) ;;
-  }
-
   dimension: blocks {
     type: number
     sql: ${TABLE}.Blocks ;;
@@ -96,24 +74,6 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.FoulsPerMinute ;;
   }
 
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
-  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
-
-  dimension_group: game {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    datatype: datetime
-    sql: ${TABLE}.GameDate ;;
-  }
-
   dimension: game_date_age {
     type: number
     sql: ${TABLE}.GameDateAge ;;
@@ -138,13 +98,6 @@ view: wnba_player_stats_by_game {
     type: number
     sql: ${TABLE}.HomeTeamFlag ;;
   }
-
-  measure: minutes {
-    type: sum
-    value_format: "0.00"
-    sql: ${TABLE}.Minutes ;;
-  }
-
   dimension: name {
     type: string
     sql: ${TABLE}.Name ;;
@@ -254,6 +207,56 @@ view: wnba_player_stats_by_game {
     type: number
     sql: ${TABLE}.YearsInLeague ;;
   }
+
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
+
+  dimension_group: game {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    datatype: datetime
+    sql: ${TABLE}.GameDate ;;
+  }
+
+# A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+
+  measure: annual_salary {
+    type: average
+    value_format_name: usd
+    sql: ${TABLE}.AnnualSalary2022 ;;
+  }
+
+  measure: assists {
+    type: sum
+    sql: ${TABLE}.Assists ;;
+  }
+
+  measure: assists_per_minute {
+    type: number
+    value_format: "0.000"
+    sql: ${assists} / nullif(${minutes}, 0) ;;
+  }
+
+
+  measure: minutes {
+    type: sum
+    value_format: "0.00"
+    sql: ${TABLE}.Minutes ;;
+  }
+
+
 
   measure: count {
     type: count
