@@ -336,12 +336,22 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.Turnovers ;;
   }
 
+
   measure: turnovers_per_minute {
     type: number
     group_label: "Turnovers"
     value_format: "0.000"
     sql: ${turnovers}/nullif(${minutes},0);;
   }
+
+  measure: turnover_rate {
+    type: number
+    group_label: "Four Factors Data"
+    value_format: "0.000"
+    # Our formula is a little different because our data splits normal FG and FG3.
+    sql: ${turnovers}   / nullif(${team_possessions}, 0) ;;
+  }
+
 
   measure: minutes {
     type: sum
@@ -364,16 +374,17 @@ view: wnba_player_stats_by_game {
     sql: ${team_win} ;;
   }
 
+  measure: team_possessions {
+    type: sum_distinct
+    sql_distinct_key: ${TABLE}.GameIdTeamId ;;
+    sql: ${TABLE}.TeamPossessions ;;
+  }
+
   measure: team_wins {
     type: sum_distinct
     sql_distinct_key: ${TABLE}.GameIdTeamId ;;
     sql: ${team_win} ;;
   }
 
-  measure: team_possessions {
-    type: sum_distinct
-    sql_distinct_key: ${TABLE}.GameIdTeamId ;;
-    sql: ${TABLE}.TeamPossessions ;;
-  }
 
 }
