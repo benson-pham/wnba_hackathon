@@ -27,36 +27,52 @@ view: wnba_team_and_opponent_game_stats {
     sql: ${field_goals_attempted_2pt} ;;
   }
 
+  measure: effective_fg_pct {
+    type: number
+    group_label: "Four Factors Data"
+    value_format: "0.000"
+    # Our formula is a little different because our data splits normal FG and FG3.
+    sql: (${field_goals_made_2pt} + 1.5 * ${field_goals_made_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
+  }
+
   measure: average_field_goals_attempted_2pt {
-    type: average
+    type: sum
     sql: ${field_goals_attempted_2pt} ;;
   }
 
-  dimension: field_goals_attempted_3pt {
-    type: number
+  measure: field_goals_attempted_3pt {
+    type: sum
     sql: ${TABLE}.field_goals_attempted_3pt ;;
   }
 
-  dimension: field_goals_made_2pt {
-    type: number
+  measure: field_goals_made_2pt {
+    type: sum
     sql: ${TABLE}.field_goals_made_2pt ;;
   }
 
-  dimension: field_goals_made_3pt {
-    type: number
+  measure: field_goals_made_3pt {
+    type: sum
     sql: ${TABLE}.field_goals_made_3pt ;;
   }
 
-  dimension: free_throws_attempted {
-    type: number
+  measure: free_throws_attempted {
+    type: sum
     sql: ${TABLE}.free_throws_attempted ;;
   }
 
-  dimension: free_throws_made {
-    type: number
+  measure: free_throws_made {
+    type: sum
     sql: ${TABLE}.free_throws_made ;;
   }
 
+  measure: free_throw_rate {
+    type: number
+    group_label: "Four Factors Data"
+    value_format: "0.000"
+    sql: ${free_throws_made}  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
+
+
+  }
   dimension: game_id {
     type: string
     sql: ${TABLE}.GameId ;;
@@ -142,28 +158,28 @@ view: wnba_team_and_opponent_game_stats {
     sql: ${TABLE}.team_abbreviation ;;
   }
 
-  dimension: team_defensive_rebounds {
-    type: number
+  measure: team_defensive_rebounds {
+    type: sum
     sql: ${TABLE}.team_defensive_rebounds ;;
   }
 
-  dimension: team_offensive_rebounds {
-    type: number
+  measure: team_offensive_rebounds {
+    type: sum
     sql: ${TABLE}.team_offensive_rebounds ;;
   }
 
-  dimension: team_points {
-    type: number
+  measure: team_points {
+    type: sum
     sql: ${TABLE}.team_points ;;
   }
 
-  dimension: team_possessions {
-    type: number
+  measure: team_possessions {
+    type: sum
     sql: ${TABLE}.team_possessions ;;
   }
 
-  dimension: team_turnovers {
-    type: number
+  measure: team_turnovers {
+    type: sum
     sql: ${TABLE}.team_turnovers ;;
   }
 
@@ -171,6 +187,15 @@ view: wnba_team_and_opponent_game_stats {
     type: number
     sql: ${TABLE}.team_win ;;
   }
+
+  measure: turnover_rate {
+    type: number
+    group_label: "Four Factors Data"
+    value_format: "0.000"
+    # Our formula is a little different because our data splits normal FG and FG3.
+    sql: ${team_turnovers} / nullif(${team_possessions}, 0) ;;
+  }
+
 
   measure: count {
     type: count

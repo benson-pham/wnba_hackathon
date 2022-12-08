@@ -202,14 +202,6 @@ view: wnba_player_stats_by_game {
     sql: ${blocks} / nullif(${minutes}, 0) ;;
   }
 
-  measure: effective_fg_pct {
-    type: number
-    group_label: "Four Factors Data"
-    value_format: "0.000"
-    # Our formula is a little different because our data splits normal FG and FG3.
-    sql: (${field_goals_made_2pt} + 1.5 * ${field_goals_made_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
-  }
-
   measure: fantasy_points {
     type: sum
     group_label: "Fantasy"
@@ -343,15 +335,6 @@ view: wnba_player_stats_by_game {
     value_format: "0.000"
     sql: ${turnovers}/nullif(${minutes},0);;
   }
-
-  measure: turnover_rate {
-    type: number
-    group_label: "Four Factors Data"
-    value_format: "0.000"
-    # Our formula is a little different because our data splits normal FG and FG3.
-    sql: ${turnovers}   / nullif(${team_possessions}, 0) ;;
-  }
-
 
   measure: minutes {
     type: sum
