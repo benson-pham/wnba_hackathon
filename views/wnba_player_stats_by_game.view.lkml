@@ -4,8 +4,7 @@ explore: wnba_player_stats_by_game {}
 view: wnba_player_stats_by_game {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: `aarons-awesome-project.wnba_hackathon.wnba_player_stats_by_game`
-    ;;
+  sql_table_name: `aarons-awesome-project.wnba_hackathon.wnba_player_stats_by_game`;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -156,6 +155,8 @@ view: wnba_player_stats_by_game {
 
   measure: Avg_annual_salary {
     type: average
+    group_label: "Salary"
+    group_item_label: "Avg_annual_salary"
     value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
@@ -169,16 +170,54 @@ view: wnba_player_stats_by_game {
 
   measure: Total_annual_salary {
     type: sum
+    group_label: "Salary"
+    group_item_label: "Total_annual_salary"
     value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+# <<<<<<< HEAD
+  measure: average_player_height {
+    type: average_distinct
+    sql_distinct_key: ${player_id} ;;
+    group_label: "Demographics"
+    group_item_label: "average_player_height"
+    sql: ${height_in_inches} ;;
+    value_format: "0.00"
+  }
+
+  measure: average_player_age {
+    type: average_distinct
+    sql_distinct_key: ${player_id} ;;
+    group_label: "Demographics"
+    group_item_label: "average_player_age"
+    sql: ${age} ;;
+    value_format: "0.00"
+  }
+# =======
+# >>>>>>> branch 'master' of https://github.com/benson-pham/wnba_hackathon.git
 
   measure: assists {
     type: sum
     group_label: "Assists"
     group_item_label: "Total Assists"
     sql: ${TABLE}.Assists ;;
+    drill_fields: [name,assists_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.assists_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.assists_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.assists_per_minute"
+    }
   }
 
   measure: assists_per_minute {
@@ -193,6 +232,22 @@ view: wnba_player_stats_by_game {
     group_label: "Blocks"
     group_item_label: "Total Blocks"
     sql: ${TABLE}.Blocks ;;
+    drill_fields: [name,blocks_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.blocks_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.blocks_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.blocks_per_minute"
+    }
   }
 
   measure: blocks_per_minute {
@@ -270,6 +325,22 @@ view: wnba_player_stats_by_game {
     group_label: "Points"
     group_item_label: "Total Points"
     sql: ${TABLE}.Points ;;
+    drill_fields: [name,points_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.points_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.points_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.points_per_minute"
+    }
   }
 
   measure: points_per_minute {
@@ -298,6 +369,22 @@ view: wnba_player_stats_by_game {
     group_label: "Rebounds"
     group_item_label: "Total Rebounds"
     sql: ${TABLE}.Rebounds ;;
+    drill_fields: [name,rebounds_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.rebounds_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.rebounds_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.rebounds_per_minute"
+    }
   }
 
   measure: rebounds_per_minute {
@@ -312,6 +399,22 @@ view: wnba_player_stats_by_game {
     group_label: "Steals"
     group_item_label: "Total Steals"
     sql: ${TABLE}.Steals ;;
+    drill_fields: [name,steals_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.steals_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.steals_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.steals_per_minute"
+    }
   }
 
   measure: steals_per_minute {
@@ -319,6 +422,7 @@ view: wnba_player_stats_by_game {
     group_label: "Steals"
     value_format: "0.000"
     sql: ${steals}/nullif(${minutes},0);;
+
   }
 
   measure: turnovers {
@@ -368,6 +472,5 @@ view: wnba_player_stats_by_game {
     sql_distinct_key: ${TABLE}.GameIdTeamId ;;
     sql: ${team_win} ;;
   }
-
 
 }
