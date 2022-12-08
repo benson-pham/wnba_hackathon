@@ -68,8 +68,8 @@ view: wnba_team_and_opponent_game_stats {
     type: number
     group_label: "Four Factors Data"
     value_format: "0.000"
-    sql:  351.1146 * ${effective_fg_pct} + -287.2934 * ${turnover_rate} + 137.1432 * ${offensive_rebound_pct} + 41.0642 * ${free_throw_rate}
-      + -409.9348 * ${opp_effective_fg_pct} + 289.4278 * ${opp_turnover_rate} + 58.7066 * ${defensive_rebound_pct} + -70.4028 * ${opp_free_throw_rate};;
+    sql:  (351.1146 * ${effective_fg_pct} + -287.2934 * ${turnover_rate} + 137.1432 * ${offensive_rebound_pct} + 41.0642 * ${free_throw_rate}
+      + -409.9348 * ${opp_effective_fg_pct} + 289.4278 * ${opp_turnover_rate} + 58.7066 * ${defensive_rebound_pct} + -70.4028 * ${opp_free_throw_rate}) / 82 * 36;;
   }
 
   measure: free_throws_attempted {
