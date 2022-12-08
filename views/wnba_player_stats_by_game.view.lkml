@@ -373,7 +373,14 @@ view: wnba_player_stats_by_game {
     type: number
     group_label: "Turnovers"
     value_format: "0.000"
-    sql: CASE WHEN ${game_date} < ${months} THEN ${turnovers_per_minute} ELSE null END;;
+    sql: sum(CASE WHEN ${game_date} < CAST({% parameter months %} as date) THEN ${TABLE}.Turnovers ELSE null END)/nullif(sum(CASE WHEN ${game_date} < CAST({% parameter months %} as date) THEN ${TABLE}.Minutes ELSE null END),0);;
+  }
+
+  measure: post_turnovers_per_minute {
+    type: number
+    group_label: "Turnovers"
+    value_format: "0.000"
+    sql: sum(CASE WHEN ${game_date} >= CAST({% parameter months %} as date) THEN ${TABLE}.Turnovers ELSE null END)/nullif(sum(CASE WHEN ${game_date} >= CAST({% parameter months %} as date) THEN ${TABLE}.Minutes ELSE null END),0);;
   }
 
   parameter: months {
