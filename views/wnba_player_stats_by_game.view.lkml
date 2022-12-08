@@ -161,6 +161,13 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+  measure: Avg_annual_salary_distinct {
+    type: average_distinct
+    sql_distinct_key: ${player_id} ;;
+    value_format_name: usd
+    sql: ${TABLE}.AnnualSalary2022 ;;
+  }
+
   measure: Total_annual_salary {
     type: sum
     group_label: "Salary"
@@ -169,6 +176,7 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+# <<<<<<< HEAD
   measure: average_player_height {
     type: average
     group_label: "Demographics"
@@ -184,6 +192,8 @@ view: wnba_player_stats_by_game {
     sql: ${age} ;;
     value_format: "0.00"
   }
+# =======
+# >>>>>>> branch 'master' of https://github.com/benson-pham/wnba_hackathon.git
 
   measure: assists {
     type: sum
@@ -223,7 +233,29 @@ view: wnba_player_stats_by_game {
     type: number
     group_label: "Fantasy"
     value_format: "0.000"
-    sql: ${fantasy_points}/nullif(${fantasy_points},0) ;;
+    sql: ${fantasy_points}/nullif(${minutes},0) ;;
+  }
+
+  measure: field_goals_attempted_2pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_attempted_2pt ;;
+  }
+  measure: field_goals_attempted_3pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_attempted_3pt ;;
+  }
+
+  measure: field_goals_made_2pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_made_2pt ;;
+  }
+  measure: field_goals_made_3pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_made_3pt ;;
   }
 
   measure: fouls {
@@ -317,6 +349,7 @@ view: wnba_player_stats_by_game {
     sql: ${TABLE}.Turnovers ;;
   }
 
+
   measure: turnovers_per_minute {
     type: number
     group_label: "Turnovers"
@@ -344,4 +377,18 @@ view: wnba_player_stats_by_game {
     type: sum
     sql: ${team_win} ;;
   }
+
+  measure: team_possessions {
+    type: sum_distinct
+    sql_distinct_key: ${TABLE}.GameIdTeamId ;;
+    sql: ${TABLE}.TeamPossessions ;;
+  }
+
+  measure: team_wins {
+    type: sum_distinct
+    sql_distinct_key: ${TABLE}.GameIdTeamId ;;
+    sql: ${team_win} ;;
+  }
+
+
 }
