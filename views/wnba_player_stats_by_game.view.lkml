@@ -178,7 +178,8 @@ view: wnba_player_stats_by_game {
 
 # <<<<<<< HEAD
   measure: average_player_height {
-    type: average
+    type: average_distinct
+    sql_distinct_key: ${player_id} ;;
     group_label: "Demographics"
     group_item_label: "average_player_height"
     sql: ${height_in_inches} ;;
@@ -186,7 +187,8 @@ view: wnba_player_stats_by_game {
   }
 
   measure: average_player_age {
-    type: average
+    type: average_distinct
+    sql_distinct_key: ${player_id} ;;
     group_label: "Demographics"
     group_item_label: "average_player_age"
     sql: ${age} ;;
