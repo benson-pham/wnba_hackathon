@@ -206,7 +206,8 @@ view: wnba_player_stats_by_game {
     type: number
     group_label: "Four Factors Data"
     value_format: "0.000"
-    sql: (${field_goals_attempted_2pt} + .5 * ${field_goals_attempted_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
+    # Our formula is a little different because our data splits normal FG and FG3.
+    sql: (${field_goals_attempted_2pt} + 1.5 * ${field_goals_attempted_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
   }
 
   measure: fantasy_points {
