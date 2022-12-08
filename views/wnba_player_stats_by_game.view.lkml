@@ -4,8 +4,7 @@ explore: wnba_player_stats_by_game {}
 view: wnba_player_stats_by_game {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: `aarons-awesome-project.wnba_hackathon.wnba_player_stats_by_game`
-    ;;
+  sql_table_name: `aarons-awesome-project.wnba_hackathon.wnba_player_stats_by_game`;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -156,6 +155,8 @@ view: wnba_player_stats_by_game {
 
   measure: Avg_annual_salary {
     type: average
+    group_label: "Salary"
+    group_item_label: "Avg_annual_salary"
     value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
@@ -169,10 +170,30 @@ view: wnba_player_stats_by_game {
 
   measure: Total_annual_salary {
     type: sum
+    group_label: "Salary"
+    group_item_label: "Total_annual_salary"
     value_format_name: usd
     sql: ${TABLE}.AnnualSalary2022 ;;
   }
 
+# <<<<<<< HEAD
+  measure: average_player_height {
+    type: average
+    group_label: "Demographics"
+    group_item_label: "average_player_height"
+    sql: ${height_in_inches} ;;
+    value_format: "0.00"
+  }
+
+  measure: average_player_age {
+    type: average
+    group_label: "Demographics"
+    group_item_label: "average_player_age"
+    sql: ${age} ;;
+    value_format: "0.00"
+  }
+# =======
+# >>>>>>> branch 'master' of https://github.com/benson-pham/wnba_hackathon.git
 
   measure: assists {
     type: sum
