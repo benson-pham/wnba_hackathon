@@ -35,7 +35,7 @@ view: wnba_team_and_opponent_game_stats {
     sql: (${field_goals_made_2pt} + 1.5 * ${field_goals_made_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
   }
 
-  measure: average_field_goals_attempted_2pt {
+  measure: field_field_goals_attempted_2pt {
     type: sum
     sql: ${TABLE}.field_goals_attempted_2pt ;;
   }
