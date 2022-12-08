@@ -202,6 +202,13 @@ view: wnba_player_stats_by_game {
     sql: ${blocks} / nullif(${minutes}, 0) ;;
   }
 
+  measure: effective_fg_pct {
+    type: number
+    group_label: "Four Factors Data"
+    value_format: "0.000"
+    sql: (${field_goals_attempted_2pt} + .5 * ${field_goals_attempted_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
+  }
+
   measure: fantasy_points {
     type: sum
     group_label: "Fantasy"
@@ -212,7 +219,29 @@ view: wnba_player_stats_by_game {
     type: number
     group_label: "Fantasy"
     value_format: "0.000"
-    sql: ${fantasy_points}/nullif(${fantasy_points},0) ;;
+    sql: ${fantasy_points}/nullif(${minutes},0) ;;
+  }
+
+  measure: field_goals_attempted_2pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_attempted_2pt ;;
+  }
+  measure: field_goals_attempted_3pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_attempted_3pt ;;
+  }
+
+  measure: field_goals_made_2pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_made_2pt ;;
+  }
+  measure: field_goals_made_3pt {
+    type: sum
+    group_label: "Four Factors Data"
+    sql: ${TABLE}.field_goals_made_3pt ;;
   }
 
   measure: fouls {
