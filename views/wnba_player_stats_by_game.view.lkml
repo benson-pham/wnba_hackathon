@@ -369,5 +369,36 @@ view: wnba_player_stats_by_game {
     sql: ${team_win} ;;
   }
 
+  measure: pre_turnovers_per_minute {
+    type: number
+    group_label: "Turnovers"
+    value_format: "0.000"
+    sql: CASE WHEN ${game_date} < ${months} THEN ${turnovers_per_minute} ELSE null END;;
+  }
+
+  parameter: months {
+    type: date
+    allowed_value: {
+      label: "May"
+      value:"2022-05-01"
+    }
+
+    allowed_value: {
+      label: "June"
+      value:"2022-06-01"
+    }
+
+    allowed_value: {
+      label: "July"
+      value:"2022-07-01"
+    }
+
+    allowed_value: {
+      label: "August"
+      value:"2022-08-01"
+    }
+  }
+
+
 
 }
