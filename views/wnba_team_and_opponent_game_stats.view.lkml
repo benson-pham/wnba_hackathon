@@ -13,19 +13,11 @@ view: wnba_team_and_opponent_game_stats {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Field Goals Attempted 2pt" in Explore.
 
-  dimension: field_goals_attempted_2pt {
-    type: number
-    sql: ${TABLE}.field_goals_attempted_2pt ;;
-  }
+
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_field_goals_attempted_2pt {
-    type: sum
-    sql: ${field_goals_attempted_2pt} ;;
-  }
 
   measure: effective_fg_pct {
     type: number
@@ -35,7 +27,7 @@ view: wnba_team_and_opponent_game_stats {
     sql: (${field_goals_made_2pt} + 1.5 * ${field_goals_made_3pt})  / nullif((${field_goals_attempted_2pt} + ${field_goals_attempted_3pt}), 0) ;;
   }
 
-  measure: field_field_goals_attempted_2pt {
+  measure: field_goals_attempted_2pt {
     type: sum
     sql: ${TABLE}.field_goals_attempted_2pt ;;
   }
