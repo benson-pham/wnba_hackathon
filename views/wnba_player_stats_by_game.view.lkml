@@ -179,6 +179,22 @@ view: wnba_player_stats_by_game {
     group_label: "Assists"
     group_item_label: "Total Assists"
     sql: ${TABLE}.Assists ;;
+    drill_fields: [name,assists_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.assists_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.assists_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.assists_per_minute"
+    }
   }
 
   measure: assists_per_minute {
@@ -193,6 +209,22 @@ view: wnba_player_stats_by_game {
     group_label: "Blocks"
     group_item_label: "Total Blocks"
     sql: ${TABLE}.Blocks ;;
+    drill_fields: [name,blocks_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.blocks_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.blocks_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.blocks_per_minute"
+    }
   }
 
   measure: blocks_per_minute {
@@ -270,6 +302,22 @@ view: wnba_player_stats_by_game {
     group_label: "Points"
     group_item_label: "Total Points"
     sql: ${TABLE}.Points ;;
+    drill_fields: [name,points_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.points_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.points_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.points_per_minute"
+    }
   }
 
   measure: points_per_minute {
@@ -298,6 +346,22 @@ view: wnba_player_stats_by_game {
     group_label: "Rebounds"
     group_item_label: "Total Rebounds"
     sql: ${TABLE}.Rebounds ;;
+    drill_fields: [name,rebounds_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.rebounds_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.rebounds_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.rebounds_per_minute"
+    }
   }
 
   measure: rebounds_per_minute {
@@ -312,6 +376,22 @@ view: wnba_player_stats_by_game {
     group_label: "Steals"
     group_item_label: "Total Steals"
     sql: ${TABLE}.Steals ;;
+    drill_fields: [name,steals_per_minute]
+
+    link: {
+      label: "Per Minute By Player"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.name,wnba_player_stats_by_game.steals_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Team"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.team_abbreviation,wnba_player_stats_by_game.steals_per_minute"
+    }
+
+    link: {
+      label: "Per Minute By Position"
+      url: "{{ link }}&fields=wnba_player_stats_by_game.position,wnba_player_stats_by_game.steals_per_minute"
+    }
   }
 
   measure: steals_per_minute {
@@ -319,6 +399,7 @@ view: wnba_player_stats_by_game {
     group_label: "Steals"
     value_format: "0.000"
     sql: ${steals}/nullif(${minutes},0);;
+
   }
 
   measure: turnovers {
@@ -368,44 +449,5 @@ view: wnba_player_stats_by_game {
     sql_distinct_key: ${TABLE}.GameIdTeamId ;;
     sql: ${team_win} ;;
   }
-
-  measure: pre_turnovers_per_minute {
-    type: number
-    group_label: "Turnovers"
-    value_format: "0.000"
-    sql: sum(CASE WHEN ${game_date} < CAST({% parameter months %} as date) THEN ${TABLE}.Turnovers ELSE null END)/nullif(sum(CASE WHEN ${game_date} < CAST({% parameter months %} as date) THEN ${TABLE}.Minutes ELSE null END),0);;
-  }
-
-  measure: post_turnovers_per_minute {
-    type: number
-    group_label: "Turnovers"
-    value_format: "0.000"
-    sql: sum(CASE WHEN ${game_date} >= CAST({% parameter months %} as date) THEN ${TABLE}.Turnovers ELSE null END)/nullif(sum(CASE WHEN ${game_date} >= CAST({% parameter months %} as date) THEN ${TABLE}.Minutes ELSE null END),0);;
-  }
-
-  parameter: months {
-    type: date
-    allowed_value: {
-      label: "May"
-      value:"2022-05-01"
-    }
-
-    allowed_value: {
-      label: "June"
-      value:"2022-06-01"
-    }
-
-    allowed_value: {
-      label: "July"
-      value:"2022-07-01"
-    }
-
-    allowed_value: {
-      label: "August"
-      value:"2022-08-01"
-    }
-  }
-
-
 
 }
