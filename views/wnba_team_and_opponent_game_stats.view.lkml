@@ -37,7 +37,7 @@ view: wnba_team_and_opponent_game_stats {
 
   measure: average_field_goals_attempted_2pt {
     type: sum
-    sql: ${field_goals_attempted_2pt} ;;
+    sql: ${TABLE}.field_goals_attempted_2pt ;;
   }
 
   measure: field_goals_attempted_3pt {
@@ -93,63 +93,63 @@ view: wnba_team_and_opponent_game_stats {
     sql: ${TABLE}.opp_abbreviation ;;
   }
 
-  dimension: opp_defensive_rebounds {
-    type: number
+  measure: opp_defensive_rebounds {
+    type: sum
     sql: ${TABLE}.opp_defensive_rebounds ;;
   }
 
-  dimension: opp_field_goals_attempted_2pt {
-    type: number
+  measure: opp_field_goals_attempted_2pt {
+    type: sum
     sql: ${TABLE}.opp_field_goals_attempted_2pt ;;
   }
 
-  dimension: opp_field_goals_attempted_3pt {
-    type: number
+  measure: opp_field_goals_attempted_3pt {
+    type: sum
     sql: ${TABLE}.opp_field_goals_attempted_3pt ;;
   }
 
-  dimension: opp_field_goals_made_2pt {
-    type: number
+  measure: opp_field_goals_made_2pt {
+    type: sum
     sql: ${TABLE}.opp_field_goals_made_2pt ;;
   }
 
-  dimension: opp_field_goals_made_3pt {
-    type: number
+  measure: opp_field_goals_made_3pt {
+    type: sum
     sql: ${TABLE}.opp_field_goals_made_3pt ;;
   }
 
-  dimension: opp_free_throws_attempted {
-    type: number
+  measure: opp_free_throws_attempted {
+    type: sum
     sql: ${TABLE}.opp_free_throws_attempted ;;
   }
 
-  dimension: opp_free_throws_made {
-    type: number
+  measure: opp_free_throws_made {
+    type: sum
     sql: ${TABLE}.opp_free_throws_made ;;
   }
 
-  dimension: opp_offensive_rebounds {
-    type: number
+  measure: opp_offensive_rebounds {
+    type: sum
     sql: ${TABLE}.opp_offensive_rebounds ;;
   }
 
-  dimension: opp_points {
-    type: number
+  measure: opp_points {
+    type: sum
     sql: ${TABLE}.opp_points ;;
   }
 
-  dimension: opp_possessions {
-    type: number
+  measure: opp_possessions {
+    type: sum
     sql: ${TABLE}.opp_possessions ;;
   }
 
-  dimension: opp_turnovers {
-    type: number
+  measure: opp_turnovers {
+    type: sum
     sql: ${TABLE}.opp_turnovers ;;
   }
 
-  dimension: opp_win {
-    type: number
+  measure: opp_win {
+    type: sum
     sql: ${TABLE}.opp_win ;;
   }
 
@@ -183,8 +183,8 @@ view: wnba_team_and_opponent_game_stats {
     sql: ${TABLE}.team_turnovers ;;
   }
 
-  dimension: team_win {
-    type: number
+  measure: team_win {
+    type: sum
     sql: ${TABLE}.team_win ;;
   }
 
